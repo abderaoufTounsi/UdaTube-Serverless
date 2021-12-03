@@ -27,5 +27,10 @@ export async function createVideo(
 
 export async function updateVideo(userId: string, videoId: string, updatedVideo: UpdateVideoRequest) {
     
-  return await videoAccess.updateTodo(userId, videoId, updatedVideo)
+  return await videoAccess.updateVideo(userId, videoId, updatedVideo)
+}
+
+export async function deleteVideo(videoId: string, userId: string): Promise<string> {
+  
+  return await videoAccess.deleteVideo(userId, videoId)
 }

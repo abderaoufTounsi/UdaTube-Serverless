@@ -29,7 +29,7 @@ export class VideosAccess {
         return videoItem
     }
 
-    async updateTodo(userId: string, videoId: string, updatedVideo: UpdateVideoRequest) {
+    async updateVideo(userId: string, videoId: string, updatedVideo: UpdateVideoRequest) {
         await this.docClient.update({
             TableName: this.videosTable,
             Key: {
@@ -49,5 +49,21 @@ export class VideosAccess {
             videoId: videoId,
             ... updatedVideo
         }
+    }
+
+    async deleteVideo(userId: string, videoId: string): Promise<string> {
+
+        await this.docClient.delete({
+            TableName: this.videosTable,
+            Key: {
+                userId: userId,
+                videoId: videoId
+            }
+        }).promise()
+        
+        return JSON.stringify ({
+            userId: userId,
+            videoId: videoId
+        })
     }
 }
