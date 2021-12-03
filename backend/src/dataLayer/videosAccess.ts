@@ -66,4 +66,14 @@ export class VideosAccess {
             videoId: videoId
         })
     }
+
+    async getVideos(): Promise<VideoItem[]> {
+
+        const result = await this.docClient.scan({
+            TableName: this.videosTable,
+        }).promise()
+        
+        const items = result.Items
+        return items as VideoItem[]
+    }
 }
