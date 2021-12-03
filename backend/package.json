@@ -1,7 +1,7 @@
 {
-  "name": "serverless-todo-app",
+  "name": "udatube-serverless",
   "version": "1.0.0",
-  "description": "Serverless TODO image app",
+  "description": "Serverless app for sharing videos",
   "dependencies": {
     "@types/axios": "^0.14.0",
     "@types/http-errors": "^1.8.1",
@@ -29,6 +29,6 @@
     "typescript": ">=3.8.0",
     "webpack": "^4.46.0"
   },
-  "author": "Ivan Mushketyk",
+  "author": "Abderaouf Tounsi",
   "license": "MIT"
 }
