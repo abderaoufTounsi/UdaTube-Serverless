@@ -42,3 +42,7 @@ export async function getVideos(): Promise<VideoItem[]> {
 export async function getVideosByUser(userId: string): Promise<VideoItem[]> {
   return await videoAccess.getVideosByUser(userId)
 }
+
+export async function createAttachmentPresignedUrl(videoId: string) {
+  return await videoAccess.createAttachmentPresignedUrl(videoId)
+}

@@ -1,22 +1,22 @@
 import * as AWS from 'aws-sdk'
-// import * as AWSXRay from 'aws-xray-sdk'
+import * as AWSXRay from 'aws-xray-sdk'
 import { DocumentClient } from 'aws-sdk/clients/dynamodb'
 import { VideoItem } from '../models/VideoItem'
 import { UpdateVideoRequest } from '../requests/UpdateVideoRequest'
 
-// const XAWS = AWSXRay.captureAWS(AWS)
+const XAWS = AWSXRay.captureAWS(AWS)
 
-// const s3 = new XAWS.S3({
-//     signatureVersion: 'v4'
-// })
+const s3 = new XAWS.S3({
+    signatureVersion: 'v4'
+})
 
 export class VideosAccess {
     
     constructor(
         private readonly docClient: DocumentClient = new AWS.DynamoDB.DocumentClient(),
         private readonly videosTable = process.env.VIDEOS_TABLE,
-        // private readonly bucketName = process.env.ATTACHMENT_S3_BUCKET,
-        // private readonly urlExpiration = process.env.SIGNED_URL_EXPIRATION,
+        private readonly bucketName = process.env.ATTACHMENT_S3_BUCKET,
+        private readonly urlExpiration = process.env.SIGNED_URL_EXPIRATION,
         private readonly videosCreatedAtIndex = process.env.VIDEOS_CREATED_AT_INDEX
     ) {}
 
@@ -91,5 +91,13 @@ export class VideosAccess {
         
         const items = result.Items
         return items as VideoItem[]
+    }
+
+    async createAttachmentPresignedUrl(videoId: string) {
+        return s3.getSignedUrl('putObject',{
+            Bucket: this.bucketName,
+            Key: videoId,
+            Expires: parseInt(this.urlExpiration)
+          })
     }
 }
