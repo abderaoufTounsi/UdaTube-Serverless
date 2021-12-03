@@ -131,6 +131,24 @@ functions:
           - dynamodb:Scan
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.VIDEOS_TABLE}
 
+  GetVideosByUser:
+    handler: src/lambda/http/getVideosByUser.handler
+    events:
+      - http:
+          method: get
+          path: my-videos
+          cors: true
+          authorizer: Auth
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.VIDEOS_TABLE}
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.VIDEOS_TABLE}/index/${self:provider.environment.VIDEOS_CREATED_AT_INDEX}
+
 resources:
   Resources:
     GatewayResponseDefault4XX:

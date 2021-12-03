@@ -17,7 +17,7 @@ export class VideosAccess {
         private readonly videosTable = process.env.VIDEOS_TABLE,
         // private readonly bucketName = process.env.ATTACHMENT_S3_BUCKET,
         // private readonly urlExpiration = process.env.SIGNED_URL_EXPIRATION,
-        // private readonly videosCreatedAtIndex = process.env.VIDEOS_CREATED_AT_INDEX
+        private readonly videosCreatedAtIndex = process.env.VIDEOS_CREATED_AT_INDEX
     ) {}
 
     async createVideo(videoItem: VideoItem): Promise<VideoItem> {
@@ -70,7 +70,23 @@ export class VideosAccess {
     async getVideos(): Promise<VideoItem[]> {
 
         const result = await this.docClient.scan({
+            TableName: this.videosTable
+        }).promise()
+        
+        const items = result.Items
+        return items as VideoItem[]
+    }
+
+    async getVideosByUser(userId: string): Promise<VideoItem[]> {
+
+        const result = await this.docClient.query({
             TableName: this.videosTable,
+            IndexName: this.videosCreatedAtIndex,
+            KeyConditionExpression: 'userId = :userId',
+            ExpressionAttributeValues: {
+                ':userId': userId
+            },
+            ScanIndexForward: false
         }).promise()
         
         const items = result.Items
