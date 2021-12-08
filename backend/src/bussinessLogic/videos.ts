@@ -35,9 +35,6 @@ export async function deleteVideo(videoId: string, userId: string): Promise<stri
   return await videoAccess.deleteVideo(userId, videoId)
 }
 
-export async function getVideos(): Promise<VideoItem[]> {
-  return await videoAccess.getVideos()
-}
 
 export async function getVideosByUser(userId: string): Promise<VideoItem[]> {
   return await videoAccess.getVideosByUser(userId)

@@ -4,17 +4,6 @@ import { CreateVideoRequest } from '../types/CreateVideoRequest';
 import Axios from 'axios'
 import { UpdateVideoRequest } from '../types/UpdateVideoRequest';
 
-export async function getVideos(): Promise<Video[]> {
-    console.log('Fetching videos')
-  
-    const response = await Axios.get(`${apiEndpoint}/videos`, {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
-    console.log('videos:', response.data)
-    return response.data.items
-}
 
 export async function getVideosByUser(idToken: string): Promise<Video[]> {
     console.log('Fetching videos')

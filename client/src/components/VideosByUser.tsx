@@ -13,7 +13,7 @@ import {
   Loader
 } from 'semantic-ui-react'
 
-import { createVideo, deleteVideo, getUploadUrl, getVideos, getVideosByUser, updateVideo, uploadFile } from '../api/videos-api'
+import { createVideo, deleteVideo, getUploadUrl, getVideosByUser, uploadFile } from '../api/videos-api'
 import Auth from '../auth/Auth'
 import { Video } from '../types/Video'
 

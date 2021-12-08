@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Form, Button } from 'semantic-ui-react'
 import Auth from '../auth/Auth'
-import { createVideo, deleteVideo, getUploadUrl, getVideos, getVideosByUser, updateVideo, uploadFile } from '../api/videos-api'
+import { updateVideo } from '../api/videos-api'
 import { UpdateVideoRequest } from '../types/UpdateVideoRequest'
 
 

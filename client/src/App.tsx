@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import { Link, Route, Router, Switch } from 'react-router-dom'
 import { Grid, Menu, Segment, Image } from 'semantic-ui-react'
-import { getVideosByUser } from './api/videos-api'
 
 import Auth from './auth/Auth'
 import { EditVideo } from './components/EditVideo'
 import { LogIn } from './components/LogIn'
 import { NotFound } from './components/NotFound'
-import { Videos } from './components/Videos'
 import { VideosByUser } from './components/VideosByUser'
 
 export interface AppProps {}
@@ -75,9 +73,6 @@ export default class App extends Component<AppProps, AppState> {
     if (this.props.auth.isAuthenticated()) {
       return (
         <Menu>
-        <Menu.Item name="logout" onClick={() => {this.props.history.push(`/myvideos`)}}>
-          My videos
-        </Menu.Item>
         <Menu.Item name="logout" onClick={this.handleLogout}>
           Log Out
         </Menu.Item>
@@ -94,26 +89,16 @@ export default class App extends Component<AppProps, AppState> {
 
   generateCurrentPage() {
     if (!this.props.auth.isAuthenticated()) {
-      return (
-          <Videos/>
-      )
+      return <LogIn auth={this.props.auth} />
     }
 
     return (
       <Switch>
         <Route
-          path="/myvideos"
-          exact
-          render={props => {
-            return <VideosByUser {...props} auth={this.props.auth} />
-          }}
-        />
-
-        <Route
           path="/"
           exact
           render={props => {
-            return <Videos/>
+            return <VideosByUser {...props} auth={this.props.auth} />
           }}
         />
 

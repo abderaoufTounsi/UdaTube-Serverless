@@ -118,19 +118,6 @@ functions:
           - dynamodb:DeleteItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.VIDEOS_TABLE}
 
-  GetVideos:
-    handler: src/lambda/http/getVideos.handler
-    events:
-      - http:
-          method: get
-          path: videos
-          cors: true
-    iamRoleStatements:
-      - Effect: Allow
-        Action:
-          - dynamodb:Scan
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.VIDEOS_TABLE}
-
   GetVideosByUser:
     handler: src/lambda/http/getVideosByUser.handler
     events:
